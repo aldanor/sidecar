@@ -12,7 +12,8 @@
   },
   "scripts": {
     "build": "./node_modules/.bin/gulp",
-    "lint": "./node_modules/.bin/eslint js"
+    "lint": "./node_modules/.bin/eslint js",
+    "watch": "./node_modules/.bin/gulp watch"
   },
   "devDependencies": {
     "alt": "^0.18.2",
