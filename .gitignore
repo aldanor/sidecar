@@ -1,0 +1,8 @@
+node_modules
+*.ipynb
+.ipynb-checkpoints
+__pycache__
+*.py[cod]
+static/*.bundle.js
+static/vendor.*
+static/fonts
