@@ -1,0 +1,18 @@
+[run]
+branch = true
+source = sidecar
+omit =
+    **/__init__.py
+    **/_version.py
+
+[report]
+exclude_lines =
+    pragma: no cover
+    raise NotImplementedError
+show_missing = true
+
+[paths]
+source =
+    src/sidecar
+    .tox/*/lib/python*/site-packages/sidecar
+

@@ -6,4 +6,8 @@ __pycache__
 static/*.bundle.js
 static/vendor.*
 static/fonts
+htmlcov
+.coverage
+.cache
+.tox
 *.egg-info
