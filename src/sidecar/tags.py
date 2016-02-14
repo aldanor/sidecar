@@ -74,8 +74,7 @@ def _register_html_tags():
 
     def clsdict(name):
         def __init__(self, **props):
-            is_container = name not in _VOID_TAGS
-            super(elements[name], self).__init__(name, is_container=is_container, props=props)
+            super(elements[name], self).__init__(name, props=props)
 
         def _convert_props(self, **props):
             props, props_items = {}, props.items()
@@ -111,7 +110,8 @@ def _register_html_tags():
         return {
             '__init__': __init__,
             '__doc__': '<{}> HTML tag.'.format(name),
-            '_convert_props': _convert_props
+            '_convert_props': _convert_props,
+            'allow_children': name not in _VOID_TAGS
         }
 
     for tag in _TAGS:

@@ -21,6 +21,7 @@ class TestTags(object):
     def test_tags(self, all_tags):
         for tag in all_tags:
             assert issubclass(tag['cls'], Element)
+            assert tag['cls'].allow_children == (not tag['void'])
             assert tag['cls'].__doc__ == '<{}> HTML tag.'.format(tag['name'])
             element = tag['cls'](
                 is_='foo', form_enc_type='bar', alt='baz', inputMode='qwe', href=expr('x'),
@@ -48,7 +49,6 @@ class TestTags(object):
                 }
             }
             assert element.name == tag['name']
-            assert element.is_container == (not tag['void'])
             assert element.inputs == []
             assert element.outputs == []
             assert element.children == []

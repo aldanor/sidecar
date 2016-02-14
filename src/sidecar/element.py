@@ -54,9 +54,10 @@ class ElementMeta(abc.ABCMeta):
 
 @six.add_metaclass(ElementMeta)
 class Element(object):
-    def __init__(self, name, is_container=False, inputs=None, outputs=None, props=None):
+    allow_children = True
+
+    def __init__(self, name, inputs=None, outputs=None, props=None):
         self.name = name
-        self.is_container = bool(is_container)
         self.inputs = list(inputs) if inputs else []
         self.outputs = list(outputs) if outputs else []
         self.props = dict(props) if props else {}
@@ -77,7 +78,7 @@ class Element(object):
 
     def __getitem__(self, key):
         # disallow setting children on non-container elements
-        if not self.is_container:
+        if not self.allow_children:
             raise RuntimeError('not a container: {}'.format(self.name))
         obj = copy.deepcopy(self)
         obj.children = key if isinstance(key, tuple) else (key,)
