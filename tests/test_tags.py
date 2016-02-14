@@ -30,7 +30,6 @@ class TestTags(object):
             assert element.to_dict() == {
                 '__element__': {
                     'name': tag['name'],
-                    'children': [],
                     'props': {
                         'is': 'foo',
                         'formEncType': 'bar',
@@ -87,7 +86,7 @@ class TestTags(object):
             element = tags.p(style={style: 'foo'})
             js_style = re.sub(r'[\-_]([a-z])', lambda s: s.group(1).upper(), style)
             assert element.to_dict() == {
-                '__element__': {'name': 'p', 'children': [], 'props': {'style': {js_style: 'foo'}}}
+                '__element__': {'name': 'p', 'props': {'style': {js_style: 'foo'}}}
             }
         assert tags.p(style={'z-index': 1.2}).props['style']['zIndex'] == 1.2
         assert tags.p(style={'z_index': 42}).props['style']['zIndex'] == 42

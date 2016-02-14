@@ -29,15 +29,10 @@ class expr(object):
 class ElementEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Element):
-            encoded = {
-                'name': obj.name,
-                'children': obj.children or [],
-                'props': obj.props or None
-            }
-            if obj.inputs:
-                encoded['inputs'] = obj.inputs
-            if obj.outputs:
-                encoded['outputs'] = obj.outputs
+            encoded = {'name': obj.name}
+            for key in ('children', 'props', 'inputs', 'outputs'):
+                if getattr(obj, key):
+                    encoded[key] = getattr(obj, key)
             return {'__element__': encoded}
         elif issubclass(obj, Element):
             return obj()
