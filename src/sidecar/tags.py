@@ -98,7 +98,7 @@ def _register_html_tags():
                         if sk not in _STYLES:
                             raise RuntimeError('unknown style: {}'.format(sk))
                         # only allow strings, integers and expressions for styles
-                        if not isinstance(sv, (six.string_types, numbers.Integral, expr)):
+                        if not isinstance(sv, (six.string_types, numbers.Real, expr)):
                             raise RuntimeError('invalid style: {}={}'.format(sk, sv))
                         v[sk] = sv
                 else:
