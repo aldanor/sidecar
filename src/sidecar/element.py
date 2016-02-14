@@ -99,5 +99,4 @@ class Element(object):
         return obj
 
     def __repr__(self):
-        props = (' ' + ' '.join('{}={!r}'.format(*i) for i in self.props.items())).rstrip()
-        return '<{0}{1}>{2}</{0}>'.format(self.name, props, '...' * bool(self.children))
+        return '<Element: {}>'.format(self.name)
