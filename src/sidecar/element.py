@@ -59,6 +59,13 @@ class Element(object):
         self.children = []
         self.props = self._convert_props(**(props or {}))
 
+        child_inputs = list(self.inputs)
+        self._visit(self.children, lambda e: child_inputs.extend(e.inputs))
+        self._visit(self.props, lambda e: child_inputs.extend(e.inputs))
+        overlap = set(child_inputs) & set(self.inputs)
+        if overlap:
+            raise RuntimeError('overlapping inputs: {}'.format(sorted(overlap)))
+
     def _convert_props(self, **props):
         return props
 
