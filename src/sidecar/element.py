@@ -62,6 +62,28 @@ class Element(object):
     def _convert_props(self, **props):
         return props
 
+    def _visit(self, obj, callback):
+        if isinstance(obj, (list, tuple)):
+            [self._visit(item, callback) for item in obj]
+        elif isinstance(obj, dict):
+            [self._visit(item, callback) for item in obj.values()]
+        elif isinstance(obj, Element):
+            callback()
+            self._visit(obj.children, callback)
+            self._visit(obj.props, callback)
+
+    @property
+    def all_inputs(self):
+        inputs = list(self.inputs)
+        self._visit(self, lambda e: inputs.extend(e.inputs), visit_self=True)
+        return sorted(set(inputs))
+
+    @property
+    def all_outputs(self):
+        outputs = list(self.outputs)
+        self._visit(self, lambda e: outputs.extend(e.outputs), visit_self=True)
+        return sorted(set(outputs))
+
     def to_json(self):
         return json.dumps(self, cls=ElementEncoder, indent=4)
 
