@@ -76,7 +76,7 @@ class Element(object):
         return isinstance(other, type(self)) and self.to_json() == other.to_json()
 
     def __getitem__(self, key):
-        # disallow settings children on non-container elements
+        # disallow setting children on non-container elements
         if not self.is_container:
             raise RuntimeError('not a container: {}'.format(self.name))
         obj = copy.deepcopy(self)
