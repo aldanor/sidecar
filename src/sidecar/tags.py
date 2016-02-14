@@ -108,7 +108,11 @@ def _register_html_tags():
                 props[k] = v
             return props
 
-        return {'__init__': __init__, '_convert_props': _convert_props}
+        return {
+            '__init__': __init__,
+            '__doc__': '<{}> HTML tag.'.format(name),
+            '_convert_props': _convert_props
+        }
 
     for tag in _TAGS:
         elements[tag] = type(tag, (Element,), clsdict(tag))

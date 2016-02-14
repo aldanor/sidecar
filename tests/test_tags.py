@@ -21,6 +21,7 @@ class TestTags(object):
     def test_tags(self, all_tags):
         for tag in all_tags:
             assert issubclass(tag['cls'], Element)
+            assert tag['cls'].__doc__ == '<{}> HTML tag.'.format(tag['name'])
             element = tag['cls'](
                 is_='foo', form_enc_type='bar', alt='baz', inputMode='qwe', href=expr('x'),
                 style={'line-height': 1, 'align_self': 'no', 'flexFlow': 'yes', 'flex': 0}
