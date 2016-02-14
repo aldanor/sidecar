@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-
 
+import io
+import re
 from setuptools import setup, find_packages
+
+with io.open('src/sidecar/_version.py', 'r') as fd:
+    version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
+                        fd.read(), re.MULTILINE).group(1)
 
 setup(
     name='sidecar',
-    version='0.0.1',
+    version=version,
     author='Ivan Smirnov',
     author_email='i.s.smirnov@gmail.com',
     packages=find_packages(where='src'),
