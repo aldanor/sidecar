@@ -58,13 +58,7 @@ class Element(object):
         self.props = dict(props) if props else {}
         self.children = []
         self.props = self._convert_props(**(props or {}))
-
-        child_inputs = list(self.inputs)
-        self._visit(self.children, lambda e: child_inputs.extend(e.inputs))
-        self._visit(self.props, lambda e: child_inputs.extend(e.inputs))
-        overlap = [item for item in set(child_inputs) if child_inputs.count(item) > 1]
-        if overlap:
-            raise RuntimeError('overlapping inputs: {}'.format(sorted(overlap)))
+        self._check_inputs()
 
     def _convert_props(self, **props):
         return props
@@ -77,20 +71,27 @@ class Element(object):
         elif isinstance(obj, type) and issubclass(obj, Element):
             self._visit(obj(), callback)
         elif isinstance(obj, Element):
-            callback()
+            callback(obj)
             self._visit(obj.children, callback)
             self._visit(obj.props, callback)
 
+    def _check_inputs(self):
+        inputs = []
+        self._visit(self, lambda e: inputs.extend(e.inputs))
+        overlap = [item for item in set(inputs) if inputs.count(item) > 1]
+        if overlap:
+            raise RuntimeError('overlapping inputs: {}'.format(sorted(overlap)))
+
     @property
     def all_inputs(self):
-        inputs = list(self.inputs)
-        self._visit(self, lambda e: inputs.extend(e.inputs), visit_self=True)
+        inputs = []
+        self._visit(self, lambda e: inputs.extend(e.inputs))
         return sorted(set(inputs))
 
     @property
     def all_outputs(self):
-        outputs = list(self.outputs)
-        self._visit(self, lambda e: outputs.extend(e.outputs), visit_self=True)
+        outputs = []
+        self._visit(self, lambda e: outputs.extend(e.outputs))
         return sorted(set(outputs))
 
     def to_json(self):
@@ -115,6 +116,7 @@ class Element(object):
             # child elements can be strings, expressions or elements
             if not isinstance(item, (six.string_types, expr, Element)):
                 raise RuntimeError('unexpected child element: {}'.format(item))
+        obj._check_inputs()
         return obj
 
     def __call__(self, **props):
@@ -122,6 +124,7 @@ class Element(object):
         new_props = obj.props
         new_props.update(props)
         obj.props = obj._convert_props(**new_props)
+        obj._check_inputs()
         return obj
 
     def __repr__(self):
