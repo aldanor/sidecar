@@ -94,8 +94,10 @@ class Element(object):
         self._visit(self, lambda e: outputs.extend(e.outputs))
         return sorted(set(outputs))
 
+    # this is the lazier way of doing this
+    # TODO: do conversion to dict manually, same way as in _visit()
     def to_json(self):
-        return json.dumps(self, cls=ElementEncoder, indent=4)
+        return json.dumps(self, cls=ElementEncoder, indent=4, sort_keys=True)
 
     def to_dict(self):
         return json.loads(self.to_json())
