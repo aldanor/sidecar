@@ -84,6 +84,10 @@ def _register_html_tags():
                 # allow trailing underscore if a prop is a Python keyword
                 if k and k.endswith('_') and keyword.iskeyword(k[:-1]):
                     k = k[:-1]
+                if k == 'class':
+                    k = 'className'
+                elif k == 'for':
+                    k = 'htmlFor'
                 if k not in _ATTRIBUTES:
                     raise RuntimeError('unknown attribute: {}'.format(k))
                 # style attribute must be a dict

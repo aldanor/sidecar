@@ -97,3 +97,9 @@ class TestTags(object):
         pytest.raises_str('invalid style: []', tags.p, style=[])
         pytest.raises_str('unknown style: foo', tags.p, style={'foo': 1})
         pytest.raises_str('invalid style: zIndex=[]', tags.p, style={'z-index': []})
+
+    def test_keyword_attrs(self):
+        assert tags.p(class_='foo') == tags.p(class_name='foo')
+        assert tags.p(class_='foo') == tags.p(className='foo')
+        assert tags.p(for_='foo') == tags.p(htmlFor='foo')
+        assert tags.p(html_for='foo') == tags.p(htmlFor='foo')
