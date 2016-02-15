@@ -34,7 +34,7 @@ class ElementEncoder(json.JSONEncoder):
                 if getattr(obj, key):
                     encoded[key] = getattr(obj, key)
             return {'__element__': encoded}
-        elif issubclass(obj, Element):
+        elif isinstance(obj, type) and issubclass(obj, Element):
             return obj()
         elif isinstance(obj, expr):
             return {'__expr__': str(obj)}
