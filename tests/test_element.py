@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import json
 import pytest
 
 from sidecar.element import Element, expr
@@ -100,3 +101,57 @@ class TestElement(object):
             Container('y', outputs=['a', 'b', 'c'])['foo']
         ]
         assert element.all_outputs == ['a', 'b', 'c', 'o']
+
+    @pytest.mark.parametrize('element, expected', [
+        (
+            tags.p(),
+            {'name': 'p'}
+        ),
+        (
+            tags.p[tags.hr, tags.br()],
+            {
+                'name': 'p',
+                'children': [
+                    {'__element__': {'name': 'hr'}},
+                    {'__element__': {'name': 'br'}}
+                ]
+            }
+        ),
+        (
+            Container('x', inputs=['a'], outputs=['b'], foo='bar')[
+                IO,
+                Tag('j', 'a', b='b'),
+                tags.p(style={'z-index': 1}, class_='baz')[expr('x'), 'y']
+            ],
+            {
+                'name': 'Container',
+                'inputs': ['a'],
+                'outputs': ['b'],
+                'props': {'x': 'x', 'foo': 'bar'},
+                'children': [
+                    {'__element__': {
+                        'name': 'IO',
+                        'inputs': ['i'],
+                        'outputs': ['o']
+                    }},
+                    {'__element__': {
+                        'name': 'Tag',
+                        'inputs': ['j'],
+                        'props': {'_a': 'a', '_b': 'b'}
+                    }},
+                    {'__element__': {
+                        'name': 'p',
+                        'props': {'style': {'zIndex': 1}, 'className': 'baz'},
+                        'children': [{'__expr__': 'x'}, 'y']
+                    }}
+                ]
+            }
+        )
+    ], ids=list(map(str, range(3))))
+    def test_to_json_or_dict(self, element, expected):
+        assert element.to_dict()['__element__'] == expected
+        assert element.to_json() == json.dumps({'__element__': expected}, indent=4, sort_keys=True)
+
+    def test_encode_invalid(self):
+        pytest.raises_str('not JSON serializable', Container(object()).to_json)
+        pytest.raises_str('not JSON serializable', Container(object()).to_dict)
