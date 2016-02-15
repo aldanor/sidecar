@@ -90,6 +90,8 @@ def _register_html_tags():
                     k = 'htmlFor'
                 if k not in _ATTRIBUTES:
                     raise RuntimeError('unknown attribute: {}'.format(k))
+                if k in props:
+                    raise RuntimeError('duplicate attribute: {}'.format(k))
                 # style attribute must be a dict
                 if k == 'style':
                     if not isinstance(v, collections.Mapping):
@@ -100,6 +102,8 @@ def _register_html_tags():
                         sk = re.sub(r'[\-_]([a-z])', lambda s: s.group(1).upper(), sk)
                         if sk not in _STYLES:
                             raise RuntimeError('unknown style: {}'.format(sk))
+                        if sk in v:
+                            raise RuntimeError('duplicate style: {}'.format(sk))
                         # only allow strings, integers and expressions for styles
                         if not isinstance(sv, (six.string_types, numbers.Real, expr)):
                             raise RuntimeError('invalid style: {}={}'.format(sk, sv))

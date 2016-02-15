@@ -103,3 +103,21 @@ class TestTags(object):
         assert tags.p(class_='foo') == tags.p(className='foo')
         assert tags.p(for_='foo') == tags.p(htmlFor='foo')
         assert tags.p(html_for='foo') == tags.p(htmlFor='foo')
+
+    def test_duplicate_attrs(self):
+        pytest.raises_str('duplicate attribute: srcDoc',
+                          tags.p, srcDoc='foo', src_doc='foo')
+        pytest.raises_str('duplicate attribute: className',
+                          tags.p, class_='foo', className='foo')
+        pytest.raises_str('duplicate attribute: className',
+                          tags.p, class_name='foo', className='foo')
+        pytest.raises_str('duplicate attribute: className',
+                          tags.p, class_='foo', class_name='foo')
+
+    def test_duplicate_styles(self):
+        pytest.raises_str('duplicate style: navUp',
+                          tags.p, style={'nav-up': 'foo', 'navUp': 'foo'})
+        pytest.raises_str('duplicate style: navUp',
+                          tags.p, style={'nav_up': 'foo', 'navUp': 'foo'})
+        pytest.raises_str('duplicate style: navUp',
+                          tags.p, style={'nav-up': 'foo', 'nav_up': 'foo'})
