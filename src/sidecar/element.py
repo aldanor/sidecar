@@ -62,7 +62,7 @@ class Element(object):
         child_inputs = list(self.inputs)
         self._visit(self.children, lambda e: child_inputs.extend(e.inputs))
         self._visit(self.props, lambda e: child_inputs.extend(e.inputs))
-        overlap = set(child_inputs) & set(self.inputs)
+        overlap = [item for item in set(child_inputs) if child_inputs.count(item) > 1]
         if overlap:
             raise RuntimeError('overlapping inputs: {}'.format(sorted(overlap)))
 
@@ -74,6 +74,8 @@ class Element(object):
             [self._visit(item, callback) for item in obj]
         elif isinstance(obj, dict):
             [self._visit(item, callback) for item in obj.values()]
+        elif isinstance(obj, type) and issubclass(obj, Element):
+            self._visit(obj(), callback)
         elif isinstance(obj, Element):
             callback()
             self._visit(obj.children, callback)
@@ -105,7 +107,7 @@ class Element(object):
         if not self.allow_children:
             raise RuntimeError('not a container: {}'.format(self.name))
         obj = copy.deepcopy(self)
-        obj.children = key if isinstance(key, tuple) else (key,)
+        obj.children = list(key) if isinstance(key, tuple) else [key]
         for item in obj.children:
             # allow using element class objects for empty elements
             if isinstance(item, type) and issubclass(item, Element):

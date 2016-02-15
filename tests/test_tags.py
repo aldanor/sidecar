@@ -4,8 +4,8 @@ import keyword
 import re
 import pytest
 
-from sidecar import tags
 from sidecar.element import Element, expr
+from sidecar import tags
 
 
 @pytest.fixture(scope='module')
