@@ -53,7 +53,7 @@ rules:
   no-native-reassign: 2
   no-nested-ternary: 2
   no-new: 2
-  no-new-func: 2
+  no-new-func: 0
   no-new-object: 2
   no-new-wrappers: 2
   no-octal: 2
@@ -72,7 +72,7 @@ rules:
   no-undef: 2
   no-undef-init: 2
   no-undefined: 2
-  no-underscore-dangle: [2, {allowAfterThis: true}]
+  no-underscore-dangle: [2, {allowAfterThis: true, allow: ["__element__", "__expr__"]}]
   no-unmodified-loop-condition: 2
   no-unused-expressions: 2
   no-unused-vars: [2, {vars: "all", args: "after-used"}]
