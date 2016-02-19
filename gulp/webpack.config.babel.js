@@ -48,7 +48,8 @@ let config = {
     },
     resolve: {
         extensions: ['', '.js', '.jsx', '.json', '.scss'],
-        modulesDirectories: ['node_modules']
+        modulesDirectories: ['node_modules'],
+        root: [pathTo('js'), pathTo('node_modules')]
     },
     node: {
         fs: 'empty',
