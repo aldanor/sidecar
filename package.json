@@ -34,6 +34,7 @@
     "classnames": "^2.2.3",
     "css-loader": "^0.23.1",
     "debug": "^2.2.0",
+    "dirty-chai": "^1.2.2",
     "eslint": "^2.2.0",
     "eslint-plugin-mocha": "^2.0.0",
     "eslint-plugin-react": "^4.0.0",
