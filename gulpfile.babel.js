@@ -12,7 +12,7 @@ function pathTo(relpath) {
 gulp.task('fonts', () =>
     gulp.src('gulp/fonts.list')
         .pipe(googleWebfonts({}))
-        .pipe(gulp.dest(pathTo('static/fonts')))
+        .pipe(gulp.dest(pathTo('src/sidecar/static/fonts')))
 );
 
 gulp.task('webpack', callback => {

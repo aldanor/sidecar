@@ -3,9 +3,9 @@ node_modules
 .ipynb-checkpoints
 __pycache__
 *.py[cod]
-static/*.bundle.js
-static/vendor.*
-static/fonts
+**/static/*.bundle.js
+**/static/vendor.*
+**/static/fonts/*
 htmlcov
 .coverage
 .cache
@@ -14,3 +14,4 @@ htmlcov
 .coverage*
 npm-debug.log
 coverage
+*.tar.gz

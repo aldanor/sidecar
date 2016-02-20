@@ -16,7 +16,7 @@ let config = {
         ]
     },
     output: {
-        path: pathTo('static'),
+        path: pathTo('src/sidecar/static'),
         publicPath: '/static/',
         filename: '[name].bundle.js',
         chunkFilename: '[name].bundle.js'
@@ -77,7 +77,7 @@ let config = {
             name: 'vendor',
             filename: 'vendor.bundle.js'
         }),
-        new ExtractTextPlugin('../static/vendor.css', { allChunks: true })
+        new ExtractTextPlugin('vendor.css', { allChunks: true })
     ],
     stats: {
         colors: true
