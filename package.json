@@ -12,6 +12,7 @@
   },
   "scripts": {
     "build": "./node_modules/.bin/gulp",
+    "cover": "./node_modules/.bin/babel-node ./node_modules/.bin/isparta cover ./node_modules/.bin/_mocha --root js --report text --report html -- --opts js/tests/mocha.opts",
     "lint": "./node_modules/.bin/eslint js",
     "test": "./node_modules/.bin/mocha --opts js/tests/mocha.opts",
     "watch": "./node_modules/.bin/gulp watch"
@@ -19,6 +20,7 @@
   "devDependencies": {
     "alt": "^0.18.2",
     "alt-utils": "^1.0.0",
+    "babel-cli": "^6.5.1",
     "babel-core": "^6.5.2",
     "babel-eslint": "^5.0.0",
     "babel-loader": "^6.2.3",
@@ -47,6 +49,7 @@
     "gulp-watch": "^4.3.5",
     "immutable": "^3.7.6",
     "imports-loader": "^0.6.5",
+    "isparta": "^4.0.0",
     "lodash": "^4.5.0",
     "material-ui": "^0.14.4",
     "mocha": "^2.4.5",

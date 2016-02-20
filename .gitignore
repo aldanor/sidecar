@@ -13,3 +13,4 @@ htmlcov
 *.egg-info
 .coverage*
 npm-debug.log
+coverage
