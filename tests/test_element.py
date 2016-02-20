@@ -41,6 +41,7 @@ class TestElement(object):
         assert str(expr('bar')) == 'bar'
         assert repr(expr('bar')) == "expr('bar')"
         assert expr('baz').code == 'baz'
+        assert {expr('foo'): 1} == {expr('foo'): 1}
 
     def test_repr(self):
         assert repr(tags.del_()) == '<Element: del>'
