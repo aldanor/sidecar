@@ -1,0 +1,7 @@
+include LICENSE
+
+include src/sidecar/static/*.css
+include src/sidecar/static/*.html
+include src/sidecar/static/*.js
+include src/sidecar/static/fonts/*.css
+include src/sidecar/static/fonts/*.woff
