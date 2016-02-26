@@ -21,3 +21,4 @@ __pycache__/
 npm-debug.log
 *.tar.gz
 *.#*
+.python-version
