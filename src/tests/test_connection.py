@@ -21,15 +21,13 @@ class AsyncSockJSClient(object):
     @tornado.gen.coroutine
     def read(self):
         response = yield self.ws.read_message()
-        assert response[0] == 'a'
+        assert response[0] == 'a'  # SockJS message tag
+        # payload is a JSON-encoded array of JSON-encoded objects
         messages = [json.loads(payload) for payload in json.loads(response[1:])]
         raise tornado.gen.Return(messages)
 
 
-class TestWebSocket(tornado.testing.AsyncHTTPTestCase):
-    def setup(cls):
-        random.seed(42)
-
+class TestConnection(tornado.testing.AsyncHTTPTestCase):
     def get_app(self):
         return Connection.tornado_app({}, 'foo')
 
